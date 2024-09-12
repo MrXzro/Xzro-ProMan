@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xzro.mapper.ProjectMapper">
+    <resultMap id="projectMap" type="project">
+        <id column="pid" property="pid"></id>
+        <result column="pname" property="pname"></result>
+        <result column="pstart" property="pstart"></result>
+        <result column="pend" property="pend"></result>
+        <result column="pprogress" property="pprogress"></result>
+        <result column="pdescription" property="pdescription"></result>
+        <!--多对多映射-->
+        <collection property="emps" ofType="employee">
+            <id column="eid" property="eid"></id>
+            <result column="eno" property="eno"></result>
+            <result column="ename" property="ename"></result>
+            <result column="eage" property="eage"></result>
+            <result column="egender" property="egender"></result>
+            <result column="ejob" property="ejob"></result>
+            <result column="eentrydate" property="eentrydate"></result>
+            <result column="esalary" property="esalary"></result>
+            <result column="estate" property="estate"></result>
+            <result column="eavatar" property="eavatar"></result>
+            <!-- 一对一映射 -->
+            <association property="department" javaType="department">
+                <id column="did" property="did"/>
+                <result column="dname" property="dname"/>
+                <result column="dlocation" property="dlocation"/>
+            </association>
+        </collection>
+    </resultMap>
+    <insert id="insertPidAndEid">
+        INSERT INTO `project_employee`(`pid`,`eid`) VALUES
+        <foreach collection="eids" item="eid" separator=",">
+            (#{pid},#{eid})
+        </foreach>
+    </insert>
+    <delete id="deletePidAndEidByPid">
+        DELETE FROM `project_employee` WHERE `pid` = #{pid}
+    </delete>
+    <select id="selectAll" resultMap="projectMap">
+        SELECT p.*, e.*, d.* FROM `project` p LEFT JOIN `project_employee` pe
+            ON  pe.`pid` = p.`pid` LEFT JOIN `employee` e ON e.`eid` = pe.`eid` LEFT JOIN `department` d ON e.`did` = d.`did`
+    </select>
+    <select id="selectEidByPid" resultType="java.lang.Long">
+        SELECT `eid` FROM `project_employee` WHERE `pid` = #{pid}
+    </select>
+</mapper>
