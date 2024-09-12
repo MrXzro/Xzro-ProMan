@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xzro.mapper.EmployeeMapper">
+    <resultMap id="employeeMap" type="employee">
+        <id column="eid" property="eid" />
+        <result column="eno" property="eno"/>
+        <result column="ename" property="ename"/>
+        <result column="eage" property="eage"/>
+        <result column="egender" property="egender"/>
+        <result column="ejob" property="ejob"/>
+        <result column="eentrydate" property="eentrydate"/>
+        <result column="esalary" property="esalary"/>
+        <result column="estate" property="estate"/>
+        <result column="did" property="did"/>
+        <association property="department" javaType="department">
+            <id column="did" property="did"/>
+            <result column="dname" property="dname"/>
+            <result column="dlocation" property="dlocation"/>
+        </association>
+    </resultMap>
+    <insert id="insert">
+        INSERT INTO `employee`(`eno`, `ename`, `eage`, `egender`, `ejob`, `eentrydate`, `esalary`, `estate`,`did`) VALUES(#{eno}, #{ename}, #{eage}, #{egender}, #{ejob}, #{eentrydate}, #{esalary}, #{estate}, #{did})
+    </insert>
+    <update id="update">
+        UPDATE `employee` SET `eno`=#{eno}, `ename`=#{ename}, `eage`=#{eage}, `egender`=#{egender}, `ejob`=#{ejob}, `eentrydate`=#{eentrydate}, `esalary`=#{esalary}, `estate`=#{estate}, `did`=#{did} WHERE `eid` = #{eid}
+    </update>
+    <delete id="delete">
+        DELETE FROM `employee` WHERE `eid` = #{eid}
+    </delete>
+    <select id="selectByEName" resultType="com.xzro.bean.Employee">
+        SELECT e.*, d.dname FROM `employee` e LEFT JOIN `department` d ON e.`did` = d.`did` ORDER BY e.`eid` ASC  LIMIT #{beginIndex}, #{everyPage}
+    </select>
+    <select id="selectByEid" resultType="com.xzro.bean.Employee">
+        SELECT e.*, d.dname FROM `employee` e LEFT JOIN `department` d ON e.`did` = d.`did` WHERE e.`eid` = #{eid}
+    </select>
+
+    <select id="selectAll" resultMap="employeeMap">
+        SELECT e.*, d.* FROM `employee` e LEFT JOIN `department` d ON e.`did` = d.`did` ORDER BY e.`eid` ASC
+    </select>
+</mapper>

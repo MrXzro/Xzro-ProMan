@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xzro.mapper.AdminMapper">
+    <select id="selectByUserNameAndPassword" resultType="com.xzro.bean.Admin">
+        SELECT * FROM `admin` WHERE `username` = #{username} AND `password` = #{password}
+    </select>
+    <select id="selectTop5DnameAndCount" resultType="java.util.Map">
+        SELECT d.`dname`, e.ct FROM `department` d, (SELECT `did`, COUNT(1) ct FROM `employee` GROUP BY `did`) e WHERE d.did = e.did ORDER BY e.ct DESC LIMIT 5
+    </select>
+</mapper>

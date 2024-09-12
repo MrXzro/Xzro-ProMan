@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xzro.mapper.DepartmentMapper">
+    <insert id="insert" parameterType="department">
+        INSERT INTO `department`(`dname`, `dlocation`) VALUES(#{dname}, #{dlocation})
+    </insert>
+    <update id="update" parameterType="department">
+        UPDATE `department` SET `dname` = #{dname}, `dlocation` = #{dlocation} WHERE `did` = #{did}
+    </update>
+    <delete id="delete">
+        DELETE FROM `department` WHERE `did` = #{did}
+    </delete>
+    <delete id="deleteTransaction">
+        DELETE FROM `department` WHERE `did` = #{did}
+    </delete>
+    <delete id="deleteAllTransaction">
+        DELETE FROM `employee` WHERE `did` = #{did}
+    </delete>
+    <select id="selectAll" resultType="Department">
+        SELECT * FROM `department`
+    </select>
+    <select id="selectByDname" resultType="Department">
+        SELECT * FROM `department` WHERE `dname` = #{dname}
+    </select>
+    <select id="selectByDid" resultType="Department">
+        SELECT * FROM `department` WHERE `did` = #{did}
+    </select>
+</mapper>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <base href="/"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>部门管理</title>
+  <link rel="icon" href="favicon.ico" type="image/ico">
+  <meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
+  <meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
+  <meta name="author" content="yinqi">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="css/style.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="js/jconfirm/jquery-confirm.min.css">
+</head>
+
+<body data-theme="dark">
+<div class="lyear-layout-web">
+  <div class="lyear-layout-container">
+    <!--左侧导航-->
+    <aside class="lyear-layout-sidebar">
+
+      <!-- logo -->
+      <div id="logo" class="sidebar-header">
+        <a href="index.html"><img src="images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
+      </div>
+      <div class="lyear-layout-sidebar-scroll">
+
+        <nav class="sidebar-main">
+          <ul class="nav nav-drawer">
+            <li class="nav-item"> <a href="admin/index.html"><i class="mdi mdi-home"></i>后台首页</a> </li>
+            <li class="nav-item nav-item-has-subnav open">
+              <a href="javascript:void(0)"><i class="mdi mdi-palette"></i>企业管理</a>
+                <ul class="nav nav-subnav ">
+                  <li> <a href="admin/emp.html">员工管理</a> </li>
+                  <li class="active"> <a href="admin/dept.html">部门管理</a> </li>
+              </ul>
+              </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p class="copyright">Copyright &copy; 2019. <a target="_blank" href="http://lyear.itshubao.com">IT书包</a> All rights reserved.</p>
+        </div>
+      </div>
+
+    </aside>
+    <!--End 左侧导航-->
+
+    <!--头部信息-->
+    <header class="lyear-layout-header">
+
+      <nav class="navbar navbar-default">
+        <div class="topbar">
+
+          <div class="topbar-left">
+            <div class="lyear-aside-toggler">
+              <span class="lyear-toggler-bar"></span>
+              <span class="lyear-toggler-bar"></span>
+              <span class="lyear-toggler-bar"></span>
+            </div>
+            <span class="navbar-page-title"> 企业管理 - 部门管理 </span>
+          </div>
+
+          <ul class="topbar-right">
+            <li class="dropdown dropdown-profile">
+              <a href="javascript:void(0)" data-toggle="dropdown">
+                <img class="img-avatar img-avatar-48 m-r-10" src="images/users/avatar.jpg" alt="笔下光年" />
+                <span><span id="username">笔下光年</span> <span class="caret"></span></span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li> <a href="lyear_pages_profile.html"><i class="mdi mdi-account"></i> 个人信息</a> </li>
+                <li> <a href="lyear_pages_edit_pwd.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a> </li>
+                <li> <a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
+                <li class="divider"></li>
+                <li> <a href="javascript:void(0);" id="logoutLink"><i class="mdi mdi-logout-variant"></i> 退出登录</a> </li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </nav>
+
+    </header>
+    <!--End 头部信息-->
+
+    <!--页面主要内容-->
+    <main class="lyear-layout-content">
+      <div class="container-fluid">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-toolbar clearfix">
+              <div class="toolbar-btn-action">
+                <a class="btn btn-primary m-r-5" href="javascript:void(0);" onclick="showAddModel()"><i class="mdi mdi-plus"></i> 新增</a>
+              </div>
+            </div>
+            <div id="all_departments_table" class="card-body">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+<!--新增模态框-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加部门</h4>
+      </div>
+      <div class="modal-body">
+        <form id="addForm" class="form-horizontal">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">部门名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputEmail3" name="dname" placeholder="请输入部门名称">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label" >部门位置</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword3" name="dlocation" placeholder="请输入部门位置">
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" onclick="addDept()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--新增模态框-->
+<!--修改模态框-->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" >修改部门</h4>
+      </div>
+      <div class="modal-body">
+        <form id="updateForm" class="form-horizontal">
+          <input type="hidden" class="form-control" name="did" placeholder="请输入部门名称">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">部门名称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="dname" placeholder="请输入部门名称">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label" >部门位置</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="dlocation" placeholder="请输入部门位置">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" onclick="updateDept()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--修改模态框-->
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+
+<!--消息提示-->
+<script src="js/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="js/lightyear.js"></script>
+<script type="text/javascript" src="js/template-web.js"></script>
+<script type="text/html" id="all_departments">
+  <table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+      <th class="text-center">ID</th>
+      <th class="text-center">部门名称</th>
+      <th class="text-center">部门位置</th>
+      <th class="text-center" colspan="2">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{each data}}
+    <tr>
+      <th scope="row">{{$value.did}}</th>
+      <td>{{$value.dname}}</td>
+      <td>{{$value.dlocation}}</td>
+      <td class="text-center">
+        <button type="button" class="btn  btn-info btn-xs" onclick="showUpdateModel(`{{$value.did}}`)">
+          <i class="mdi mdi-pencil"></i>
+          修改
+        </button>
+      </td>
+      <td class="text-center">
+        <button type="button" class="btn  btn-danger btn-xs" onclick="delDept(`{{$value.did}}`)">
+          <i class="mdi mdi-close"></i>
+          删除
+        </button>
+      </td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+</script>
+<script type="text/javascript">
+  $.ajax({
+    url: "admin/info/userinfo",
+    type: "POST",
+    dataType: "JSON",
+    success:function (resp) {
+      $("#username").text(resp.data.username)
+    }
+  })
+  function updateDept() {
+    lightyear.loading('show');
+    $.ajax({
+      url:"admin/department/update",
+      type: "POST",
+      data: $("#updateForm").serialize(),
+      dataType:"JSON",
+      success: function (response) {
+        lightyear.loading('hide');  // 隐藏
+        if (response.code == 10000) {
+          //添加成功
+          lightyear.notify('修改成功', 'success', 2000, 'mdi mdi-emoticon-happy', 'top', 'center');
+          $("#updateModal").modal("hide");
+          selectAll();
+        }else{
+          //添加失败
+          lightyear.notify("修改失败", 'danger', 2000, 'mdi mdi-emoticon-sad', 'top', 'center' );
+        }
+      },
+
+    })
+  }
+  //弹出修改的模态框
+  function showUpdateModel(did){
+    $.ajax({
+      url:"admin/department/selectByDid",
+      type: "GET",
+      data:{did: did},
+      dataType: "JSON",
+      success: function (resp) {
+        $("#updateForm input[name='did']").val(resp.data.did)
+        $("#updateForm input[name='dname']").val(resp.data.dname)
+        $("#updateForm input[name='dlocation']").val(resp.data.dlocation)
+      }
+    })
+    $("#updateModal").modal("show");
+  }
+  function addDept() {
+    lightyear.loading('show');
+    $.ajax({
+      url:"admin/department/insert",
+      type:"POST",
+      data: $("#addForm").serialize(),
+      dataType: "JSON",
+      success:function (response){
+        lightyear.loading('hide');  // 隐藏
+        if (response.code == 10000) {
+          //添加成功
+          lightyear.notify('添加成功', 'success', 2000, 'mdi mdi-emoticon-happy', 'top', 'center');
+          $("#addForm")[0].reset();
+          $("#addModal").modal("hide");
+          selectAll();
+        }else{
+          //添加失败
+          lightyear.notify("添加失败", 'danger', 2000, 'mdi mdi-emoticon-sad', 'top', 'center' );
+        }
+      }
+
+    })
+  }
+  //弹出增加的模态框
+  function showAddModel() {
+    $("#addModal").modal("show");
+  }
+    $("#logoutLink").click(function(){
+      lightyear.loading('show');
+      $.ajax({
+        url:"admin/adminController?action=logout",
+        type:"GET",
+        success:function (response) {
+          lightyear.loading('hide');  // 隐藏
+          if (response.code == 10000) {
+            //退出成功
+            lightyear.notify('退出成功，页面即将自动跳转~', 'success', 2000, 'mdi mdi-emoticon-happy', 'top', 'center' , 'admin/index.html');
+          }else{
+            //退出失败
+            lightyear.notify("退出失败", 'danger', 2000, 'mdi mdi-emoticon-sad', 'top', 'center' );
+          }
+        }
+      })
+    })
+
+    function selectAll() {
+      $. ajax({
+        url: "admin/department/selectAll",
+        type: "GET",
+        dataType: "JSON",
+        success: function (resp) {
+          let html = template('all_departments', {data: resp.data});
+          $("#all_departments_table").html(html);
+        }
+      })
+    }
+
+    function delDept(did) {
+      $.alert({
+        title: '删除',
+        content: '你确认要删除该部门么？',
+        buttons: {
+          confirm: {
+            text: '确认',
+            btnClass: 'btn-primary',
+            action: function(){
+              $.alert({
+                title: '删除',
+                content: '是否要删除该部门所有员工？',
+                buttons: {
+                  confirm: {
+                    text: '是',
+                    btnClass: 'btn-primary',
+                    action: function(){
+                      lightyear.loading('show');
+                      //发送ajax请求
+                      $.ajax({
+                        url:"admin/department/delete",
+                        type:"POST",
+                        data: {did:did,isAll:true},
+                        dataType: 'JSON',
+                        success: function (response) {
+                          lightyear.loading('hide');  // 隐藏
+                          if (response.code == 10000) {
+                            //删除成功
+                            lightyear.notify('删除成功，页面即将自动跳转~', 'success', 2000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            selectAll()
+                          }else{
+                            //删除失败
+                            lightyear.notify("删除失败", 'danger', 2000, 'mdi mdi-emoticon-sad', 'top', 'center' );
+                          }
+                        },
+                      })
+                    }
+                  },confirm1: {
+                    text: '否',
+                    btnClass: 'btn-primary',
+                    action: function(){
+                      lightyear.loading('show');
+                      //发送ajax请求
+                      $.ajax({
+                        url:"admin/department/delete",
+                        type:"POST",
+                        data: {did:did,isAll:false},
+                        dataType: 'JSON',
+                        success: function (response) {
+                          lightyear.loading('hide');  // 隐藏
+                          if (response.code == 10000) {
+                            //删除成功
+                            lightyear.notify('删除成功，页面即将自动跳转~', 'success', 2000, 'mdi mdi-emoticon-happy', 'top', 'center');
+                            selectAll()
+                          }else{
+                            //删除失败
+                            lightyear.notify("删除失败", 'danger', 2000, 'mdi mdi-emoticon-sad', 'top', 'center' );
+                          }
+                        },
+                      })
+                    }
+                  },
+                  cancel: {
+                    text: '取消'
+                  }
+                }
+              });
+            }
+          },
+          cancel: {
+            text: '取消'
+          }
+        }
+      });
+    }
+
+  // 退出登录开始
+  $("#logoutLink").click(function(){
+    lightyear.loading('show');
+    $.ajax({
+      url:"adminController/logout",
+      type:"GET",
+      dataType: "JSON",
+      success:function (response) {
+        lightyear.loading('hide');  // 隐藏
+        if (response.code == 10000) {
+          //退出成功
+          lightyear.notify('退出成功，页面即将自动跳转~', 'success', 2000, 'mdi mdi-emoticon-happy', 'top', 'center' , 'login.html');
+        }else{
+          //退出失败
+          lightyear.notify("退出失败", 'danger', 2000, 'mdi mdi-emoticon-sad', 'top', 'center' );
+        }
+      }
+    })
+  })
+  // 退出登录结束
+    selectAll();
+</script>
+<!--对话框-->
+<script src="js/jconfirm/jquery-confirm.min.js"></script>
+</body>
+</html>
